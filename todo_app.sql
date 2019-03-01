@@ -14,12 +14,25 @@ CREATE TABLE IF NOT EXISTS tasks (
   completed boolean NOT NULL DEFAULT false,
   PRIMARY KEY(id)
 );
-ALTER TABLE tasks 
-DROP COLUMN completed;
-ALTER TABLE tasks 
-ADD COLUMN completed_at timestamp DEFAULT NULL;
-ALTER TABLE tasks
-ALTER COLUMN updated_at NOT NULL 
+ALTER TABLE tasks DROP COLUMN completed;
+ALTER TABLE tasks ADD COLUMN completed_at timestamp DEFAULT NULL;
+ALTER TABLE tasks ALTER COLUMN updated_at NOT NULL DEFAULT now();
+Insert into tasks(title, description) VALUES('Study SQL', 'Complete this exercise');
+Insert into tasks(title, description) VALUES('Study PostgreSQL', 'Read all the documentation');
+SELECT title FROM tasks WHERE completed=false;
+UPDATE tasks SET completed = true, completed_at = now() WHERE title = 'Study SQL';
+
+SELECT title, description FROM tasks WHERE completed=false;
+SELECT * FROM tasks order by created_at DESC;
+
+
+Insert into tasks(title, description) VALUES('mistake 1', 'a test entry');
+Insert into tasks(title, description) VALUES('mistake 2', 'another test entry');
+Insert into tasks(title, description) VALUES('third mistake', 'another test entry');
+SELECT title, description FROM tasks WHERE title like '%mistake%';
+DELETE FROM tasks where title like '%mistake%';
+SELECT * FROM tasks ORDER BY title;
+
 
 
 
