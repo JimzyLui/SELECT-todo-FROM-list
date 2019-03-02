@@ -3,10 +3,10 @@ DROP DATABASE IF EXISTS todo_app;
 DROP USER IF EXISTS michael;
 CREATE USER michael WITH PASSWORD stonebreaker;
 CREATE DATABASE todo_app;
-psql todo_app newuser;
+-- psql todo_app newuser;
 \c todo_app;
 CREATE TABLE IF NOT EXISTS tasks (
-  id serial,
+  id SERIAL,
   title VARCHAR(255) NOT NULL,
   description TEXT,
   created_at timestamp NOT NULL DEFAULT now(),
@@ -19,10 +19,10 @@ ALTER TABLE tasks ADD COLUMN completed_at timestamp DEFAULT NULL;
 ALTER TABLE tasks ALTER COLUMN updated_at NOT NULL DEFAULT now();
 Insert into tasks(title, description) VALUES('Study SQL', 'Complete this exercise');
 Insert into tasks(title, description) VALUES('Study PostgreSQL', 'Read all the documentation');
-SELECT title FROM tasks WHERE completed=false;
-UPDATE tasks SET completed = true, completed_at = now() WHERE title = 'Study SQL';
+SELECT title FROM tasks WHERE completed_at IS NULL;
+UPDATE tasks SET completed_at = now() WHERE title = 'Study SQL';
 
-SELECT title, description FROM tasks WHERE completed=false;
+SELECT title, description FROM tasks WHERE completed_at IS NULL;
 SELECT * FROM tasks order by created_at DESC;
 
 
